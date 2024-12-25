@@ -1,90 +1,137 @@
 package collectin;
-
-import java.io.*;
 import java.util.*;
-class Employeerec
+interface Employee1
 {
-	private int id;
-	private String name;
-	private int sal;
-	public Employeerec(String name,int id,int sal)
-	{
-		this.name=name;
-		this.id=id;
-		this.sal=sal;
+	void performTask();
+	double calculateSal();
+}
+class Manager1 implements Employee1
+{
+  private String name;
+  private double baseSalary;
+  private int teamsize;
+  public Manager1(String name,double bs,int ts)
+  {
+	  this.name=name;
+	  baseSalary=bs;
+	  teamsize=ts;
+  }
+  
+	public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
+
+public double getBaseSalary() {
+	return baseSalary;
+}
+
+public void setBaseSalary(double baseSalary) {
+	this.baseSalary = baseSalary;
+}
+
+public int getTeamsize() {
+	return teamsize;
+}
+
+public void setTeamsize(int teamsize) {
+	this.teamsize = teamsize;
+}
+
+	@Override
+	public void performTask() {
+		// TODO Auto-generated method stub
+		System.out.println("Manager is managing team");
 	}
-	public int getId() {
-		return id;
+
+	@Override
+	public double calculateSal() {
+		// TODO Auto-generated method stub
+		return baseSalary+(double)(teamsize*1000);
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
+	
+}
+class Developer implements Employee1
+{
+	 private String name;
+	  private double baseSalary;
+	  private int task;
+	  public Developer(String name,double bs,int task)
+	  {
+		  this.name=name;
+		  baseSalary=bs;
+		  this.task=task;
+	  }
+	  
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getSal() {
-		return sal;
+
+	public double getBaseSalary() {
+		return baseSalary;
 	}
-	public void setSal(int sal) {
-		this.sal = sal;
+
+	public void setBaseSalary(double baseSalary) {
+		this.baseSalary = baseSalary;
 	}
+
+	public int getTask() {
+		return task;
+	}
+
+	public void setTask(int task) {
+		this.task = task;
+	}
+
+	@Override
+	public void performTask() {
+		// TODO Auto-generated method stub
+		System.out.println("Developer is Coding");
+	}
+
+	@Override
+	public double calculateSal() {
+		// TODO Auto-generated method stub
+		return baseSalary+(double)(task*200);
+	}
+	
 }
 public class EmployeeApp {
 
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-//      Employeerec e=new Employeerec("ABC",1,20000);
-//      Employeerec e1=new Employeerec("MNO",2,30000);
-         Employeerec e[]=new Employeerec[3];
-		Scanner sc=new Scanner(System.in);
-		 ArrayList al=new ArrayList();
-		System.out.println("Enter 3 Records of employee");
-		for(int i=0;i<e.length;i++)
-		{
-			System.out.println(i+1+". Enter Name,Id,Salary");
-			String name=sc.next();
-			int id=sc.nextInt();
-			int sal=sc.nextInt();
-			e[i]=new Employeerec(name,id,sal);
-			al.add(e[i]);
-		}
-		System.out.println("Employee Record Before Sorting");
-		for(Object obj:al)
-		{
-			Employeerec erc=(Employeerec)obj;
-			System.out.println(erc.getId()+"\t"+erc.getName()+"\t"+erc.getSal());
-		}
-//     
-//      File f=new File("C:\\Test\\JavaDemo\\Employee.csv");
-//      boolean b=f.createNewFile();
-//      if(b)
-//      { System.out.println("File Created");}
-//      else
-//      { System.out.println("Some Problem is there");}
-//      
-//      FileWriter fw=new FileWriter(f);
-//      CSVWriter cw=new CSVWriter(fw);
-		System.out.println("Choose Here\n1.SortByID\n2.SortBySal\nEnter");
-		int c=sc.nextInt();
-		switch(c)
-		{
-		case 1:EmployeeSortByID es=new EmployeeSortByID();
-		       Collections.sort(al,es);
-			break;
-		case 2:EmployeeSortBySalary s=new EmployeeSortBySalary();
-	       Collections.sort(al,s);
-			break;
-		}
-		System.out.println("Employee Record After Sorting");
-		for(Object obj:al)
-		{
-			Employeerec erc=(Employeerec)obj;
-			System.out.println(erc.getId()+"\t"+erc.getName()+"\t"+erc.getSal());
-		}
+       Scanner sc=new Scanner(System.in);
+       System.out.println("Enter \n1.Manager\n2.Developer");
+       int ch=sc.nextInt();
+       switch(ch)
+       {
+       case 1:System.out.println("Enter name basesal teamsize ");//case 1 for manager
+       String name=sc.next();
+       double basesal=sc.nextDouble();
+       int teamsize=sc.nextInt();
+    	    Manager1 m= new  Manager1(name,basesal,teamsize);
+    	    m.performTask();
+            System.out.println(".."+m.getName()+"\t"+m.getBaseSalary()+"\t"+m.getTeamsize()+"\t"+m.calculateSal());
+            break;
+       case 2:     
+    	   System.out.println("Enter name basesal,completed task");
+    	    name=sc.next();
+    	   basesal=sc.nextDouble();
+    			   int task=sc.nextInt();
+    			   Developer d=new Developer(name,basesal,task);
+    			   d.performTask();
+    			   System.out.println(".."+d.getName()+"\t"+d.getBaseSalary()+"\t"+d.getTask()+"\t"+d.calculateSal());
+    	            break;	   
+       }
+       }
 	}
 
-}
+
